@@ -11,6 +11,11 @@ int main()
     // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
     // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
 
+    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
+    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
+    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
+    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+
     // Letras representam as colunas (A–J)
     char colunas[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
@@ -26,6 +31,9 @@ int main()
     // Coordenadas iniciais dos navios
     int linhaNavio1 = 2, colunaNavio1 = 3; // Navio 1 - horizontal
     int linhaNavio2 = 5, colunaNavio2 = 7; // Navio 2 - vertical
+
+    int linhaNavio3 = 5, colunaNavio3 = 1; // Navio 3 - diagonal principal
+    int linhaNavio4 = 1, colunaNavio4 = 8; // Navio 4 - diagonal secundária
 
     // Validação e posicionamento do navio 1 (horizontal)
     if (colunaNavio1 + tamanhoNavio <= 10)
@@ -48,8 +56,32 @@ int main()
         }
     }
 
+    // Validação e posicionamento do navio 3 (diagonal principal)
+    if (linhaNavio3 + tamanhoNavio <= 10 && colunaNavio3 + tamanhoNavio <= 10)
+    {
+        for (int i = 0; i < tamanhoNavio; i++)
+        {
+            if (tabuleiro[linhaNavio3 + i][colunaNavio3 + i] == 0)
+            {
+                tabuleiro[linhaNavio3 + i][colunaNavio3 + i] = 3;
+            }
+        }
+    }
+
+    // Validação e posicionamento do navio 4 (diagonal secundária)
+    if (linhaNavio4 + tamanhoNavio <= 10 && colunaNavio4 - (tamanhoNavio - 1) >= 0)
+    {
+        for (int i = 0; i < tamanhoNavio; i++)
+        {
+            if (tabuleiro[linhaNavio4 + i][colunaNavio4 - i] == 0)
+            {
+                tabuleiro[linhaNavio4 + i][colunaNavio4 - i] = 3;
+            }
+        }
+    }
+
     // Exibição do Tabuleiro
-    printf(" === TABULEIRO BATALHA NAVAL === \n\n");
+    printf(" === TABULEIRO DE BATALHA NAVAL === \n\n");
 
     // Exibição das colunas
     printf("    ");
@@ -72,11 +104,6 @@ int main()
 
     return 0;
 }
-
-// Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-// Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-// Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-// Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
 
 // Nível Mestre - Habilidades Especiais com Matrizes
 // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
