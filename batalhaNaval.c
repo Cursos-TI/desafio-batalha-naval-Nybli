@@ -16,6 +16,11 @@ int main()
     // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
     // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
 
+    // Nível Mestre - Habilidades Especiais com Matrizes
+    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
+    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
+    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+
     // Letras representam as colunas (A–J)
     char colunas[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
@@ -29,19 +34,16 @@ int main()
     int tamanhoNavio = 3;
 
     // Coordenadas iniciais dos navios
-    int linhaNavio1 = 2, colunaNavio1 = 3; // Navio 1 - horizontal
-    int linhaNavio2 = 5, colunaNavio2 = 7; // Navio 2 - vertical
-
-    int linhaNavio3 = 5, colunaNavio3 = 1; // Navio 3 - diagonal principal
-    int linhaNavio4 = 1, colunaNavio4 = 8; // Navio 4 - diagonal secundária
+    int linhaNavio1 = 0, colunaNavio1 = 6; // Navio 1 - horizontal
+    int linhaNavio2 = 1, colunaNavio2 = 0; // Navio 2 - vertical
+    int linhaNavio3 = 7, colunaNavio3 = 0; // Navio 3 - diagonal principal
+    int linhaNavio4 = 6, colunaNavio4 = 8; // Navio 4 - diagonal secundária
 
     // Validação e posicionamento do navio 1 (horizontal)
     if (colunaNavio1 + tamanhoNavio <= 10)
     {
         for (int i = 0; i < tamanhoNavio; i++)
-        {
             tabuleiro[linhaNavio1][colunaNavio1 + i] = 3;
-        }
     }
 
     // Validação e posicionamento do navio 2 (vertical)
@@ -50,9 +52,7 @@ int main()
         for (int i = 0; i < tamanhoNavio; i++)
         {
             if (tabuleiro[linhaNavio2 + i][colunaNavio2] == 0)
-            {
                 tabuleiro[linhaNavio2 + i][colunaNavio2] = 3;
-            }
         }
     }
 
@@ -62,9 +62,7 @@ int main()
         for (int i = 0; i < tamanhoNavio; i++)
         {
             if (tabuleiro[linhaNavio3 + i][colunaNavio3 + i] == 0)
-            {
                 tabuleiro[linhaNavio3 + i][colunaNavio3 + i] = 3;
-            }
         }
     }
 
@@ -74,8 +72,91 @@ int main()
         for (int i = 0; i < tamanhoNavio; i++)
         {
             if (tabuleiro[linhaNavio4 + i][colunaNavio4 - i] == 0)
-            {
                 tabuleiro[linhaNavio4 + i][colunaNavio4 - i] = 3;
+        }
+    }
+
+    // Matrizes de habilidades
+    int cone[5][5] = {0};
+    int cruz[3][5] = {0};
+    int octaedro[3][3] = {0};
+
+    // Cone
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 2 - i; j <= 2 + i; j++)
+        {
+            if (j >= 0 && j < 5)
+                cone[i][j] = 1;
+        }
+    }
+
+    // Cruz
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (i == 1 || j == 2)
+                cruz[i][j] = 1;
+        }
+    }
+
+    // Octaedro
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (i == 1 || j == 1)
+                octaedro[i][j] = 1;
+        }
+    }
+
+    // Sobrepor habilidades
+
+    // Cone
+    int linhaOrigemCone = 2, colunaOrigemCone = 3;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (cone[i][j] == 1)
+            {
+                int lin = linhaOrigemCone - 2 + i;
+                int col = colunaOrigemCone - 2 + j;
+                if (lin >= 0 && lin < 10 && col >= 0 && col < 10)
+                    tabuleiro[lin][col] = 1;
+            }
+        }
+    }
+
+    // Cruz
+    int linhaOrigemCruz = 6, colunaOrigemCruz = 3;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (cruz[i][j] == 1)
+            {
+                int lin = linhaOrigemCruz - 1 + i;
+                int col = colunaOrigemCruz - 2 + j;
+                if (lin >= 0 && lin < 10 && col >= 0 && col < 10)
+                    tabuleiro[lin][col] = 1;
+            }
+        }
+    }
+
+    // Octaedro
+    int linhaOrigemOctaedro = 4, colunaOrigemOctaedro = 7;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (octaedro[i][j] == 1)
+            {
+                int lin = linhaOrigemOctaedro - 1 + i;
+                int col = colunaOrigemOctaedro - 1 + j;
+                if (lin >= 0 && lin < 10 && col >= 0 && col < 10)
+                    tabuleiro[lin][col] = 1;
             }
         }
     }
@@ -86,29 +167,19 @@ int main()
     // Exibição das colunas
     printf("    ");
     for (int c = 0; c < 10; c++)
-    {
         printf("%c  ", colunas[c]);
-    }
     printf("\n");
 
     // Exibição das linhas
     for (int i = 0; i < 10; i++)
     {
-        printf("%2d  ", linhas[i]); // número da linha (1–10)
+        printf("%2d  ", linhas[i]);
         for (int j = 0; j < 10; j++)
-        {
             printf("%d  ", tabuleiro[i][j]);
-        }
         printf("\n");
     }
-
     return 0;
 }
-
-// Nível Mestre - Habilidades Especiais com Matrizes
-// Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-// Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-// Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
 
 // Exemplos de exibição das habilidades:
 // Exemplo para habilidade em cone:
